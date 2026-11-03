@@ -1,29 +1,33 @@
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+package frc.robot.subsystems.intake;
 
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.hardware.TalonFX;
 
 public class IntakeIOReal implements IntakeIO {
-    private final TalonFX intakeMotor;
-    private final TalonFX = new TalonFX(null, 0, "intakeMotor",);
+  private final TalonFX intakeMotor;
+  private final TalonFXConfiguration intakeMotorConfiguration;
 
-    public IntakeIOReal(TalonFX intakeMotor) {
-        this.intakeMotor = intakeMotor;
-    }
-    private final IntakeIO.IntakeIOInputsAutoLogged inputs = new IntakeIO.IntakeIOInputsAutoLogged();
-    private final TalonFXConfiguration intakeMotorConfig;
-    @override
-    public void updateInputs(IntakeIOInputs inputs) {
-        inputs.intakeConnected = intakeMotor.isConnected();
-        inputs.intakePositionRad = intakeMotor.getPosition();
-        inputs.intakeVelocityRadPerSec = intakeMotor.getVelocity();
-        inputs.intakeAppliedVolts = intakeMotor.getAppliedVoltage();
-        inputs.intakeCurrentAmps = intakeMotor.getSupplyCurrent();
-    }
-    @override
-    public void setintakeVelocity(double velocityRadPerSec) {
-        intakeMotor.setVelocity(velocityRadPerSec);
-    }
-    @override
-    public void setIntakeVoltage(double voltage) {
-        intakeMotor.setVoltage(voltage);
-    }
+  public IntakeIOReal(TalonFX intakeMotor) {
+    this.intakeMotor = intakeMotor;
+    this.intakeMotorConfiguration = new TalonFXConfiguration();
+  }
+
+  @Override
+  public void updateInputs(IntakeIOInputs inputs) {
+    inputs.intakeConnected = intakeMotor.isConnected();
+    inputs.intakePositionRad = intakeMotor.getPosition().getValueAsDouble();
+    inputs.intakeVelocityRadPerSec = intakeMotor.getVelocity().getValueAsDouble();
+    inputs.intakeAppliedVolts = intakeMotor.getMotorVoltage().getValueAsDouble();
+    inputs.intakeCurrentAmps = intakeMotor.getSupplyCurrent().getValueAsDouble();
+  }
+
+  @Override
+  public void setintakeVelocity(double velocityRadPerSec) {
+    intakeMotor.setControl(new com.ctre.phoenix6.controls.VelocityVoltage(velocityRadPerSec));
+  }
+
+  @Override
+  public void setIntakeVoltage(double voltage) {
+    intakeMotor.setVoltage(voltage);
+  }
 }
