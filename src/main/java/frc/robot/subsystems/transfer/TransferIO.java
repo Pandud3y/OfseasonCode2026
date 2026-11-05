@@ -15,4 +15,14 @@ public interface TransferIO {
   public default void setTransferVoltage(double volts) {}
 
   public default void setPreShootVoltage(double volts) {}
+
+  public default void stop() {
+    setTransferVoltage(0.0);
+    setPreShootVoltage(0.0);
+  }
+
+  public default void setBoth(double transferVolts, double preShootVolts) {
+    setTransferVoltage(transferVolts);
+    setPreShootVoltage(preShootVolts);
+  }
 }

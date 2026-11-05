@@ -1,4 +1,4 @@
-package frc.robot.subsystems.Transfer;
+package frc.robot.subsystems.transfer;
 
 import org.littletonrobotics.junction.Logger;
 
@@ -31,48 +31,18 @@ public class Transfer extends SubsystemBase{
     @Override
     public void periodic() {
         io.updateInputs(inputs);
-        Logger.processInputs(getName(), inputs);
+        Logger.processInputs("Transfer", inputs);
+
+        if (DriverStation.isDisabled()) {
+            stop();
+        }
     }
 
-    private void setBoth(double transferVolts, double preShootVolts){
-        io.setPreShootVoltage(preShootVolts);
-        io.setTransferVoltage(preShootVolts);
+    private void stop() {
+        io.setTransferVoltage(0.0);
     }
-
-    public Command stopCommand() {
-        return run(() -> 
-            setBoth(0, 0)
-            );
-    }
-
-    public Command startBothCommand() {
-        return runEnd(
-            () -> setBoth(TRANSFER_VOLTS, PRESHOOT_VOLTS), 
-            () -> setBoth(0, 0)
-        );
-    }
-
-    public Command emergencyReverseCommand() {
-        return runEnd(
-            () -> setBoth(-TRANSFER_VOLTS, -PRESHOOT_VOLTS),
-            () -> setBoth(0, 0)
-            );
-    }
-
-    public Command preShootCommand() {
-        return runEnd(
-            () -> io.setPreShootVoltage(TransferConstants.PRESHOOT_VOLTS), 
-            () -> io.setPreShootVoltage(0)
-            );
-    }
-
-    public Command transferCommand() {
-        return runEnd(
-            () -> io.setTransferVoltage(TRANSFER_VOLTS),
-            () -> io.setTransferVoltage(0)
-            );
-    }
-
 
     
+
+       
 }
