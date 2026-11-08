@@ -7,16 +7,20 @@
 
 package frc.robot;
 
-import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
-
 import com.pathplanner.lib.auto.AutoBuilder;
-
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.intake.IntakeIO;
+import frc.robot.subsystems.intake.IntakeIOReal;
 import frc.robot.subsystems.transfer.Transfer;
+import frc.robot.subsystems.transfer.TransferCommands;
+import frc.robot.subsystems.transfer.TransferConstants;
+import frc.robot.subsystems.transfer.TransferIO;
+import frc.robot.subsystems.transfer.TransferIOReal;
+import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -32,7 +36,7 @@ public class RobotContainer {
 
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
- 
+
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
 
@@ -41,60 +45,26 @@ public class RobotContainer {
     switch (Constants.currentMode) {
       case REAL:
         transfer = new Transfer(new TransferIOReal());
-        // Real robot, instantiate hardware IO implementations
-        // ModuleIOTalonFX is intended for modules with TalonFX drive, TalonFX turn, and
-        // a CANcoder
-        // drive =
-        //    new Drive(
-        //        new GyroIOPigeon2(),
-        //        new ModuleIOTalonFX(TunerConstants.FrontLeft),
-        //        new ModuleIOTalonFX(TunerConstants.FrontRight),
-        //        new ModuleIOTalonFX(TunerConstants.BackLeft),
-        //        new ModuleIOTalonFX(TunerConstants.BackRight));
+        intake = new Intake(new IntakeIOReal(null));
 
         break;
 
       case SIM:
-        // Sim robot, instantiate physics sim IO implementations
-        // drive =
-        //     new Drive(
-        //         new GyroIO() {},
-        //         new ModuleIOSim(TunerConstants.FrontLeft),
-        //        new ModuleIOSim(TunerConstants.FrontRight),
-        //        new ModuleIOSim(TunerConstants.BackLeft),
-        //        new ModuleIOSim(TunerConstants.BackRight));
+        /*sim currently doesn't work but its not a priority
+        but this needs to be changed to proper sim code when it does work*/
+        transfer = new Transfer(new TransferIO() {});
+        intake = new Intake(new IntakeIO() {});
         break;
 
       default:
-        // Replayed robot, disable IO implementations
-        // drive =
-        //     new Drive(
-        //         new GyroIO() {},
-        //         new ModuleIO() {},
-        //         new ModuleIO() {},
-        //         new ModuleIO() {},
-        //         new ModuleIO() {});
+        transfer = new Transfer(new TransferIO() {});
+        intake = new Intake(new IntakeIO() {});
+
         break;
     }
 
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
-
-    // Set up SysId routines
-    // autoChooser.addOption(
-    //     "Drive Wheel Radius Characterization", DriveCommands.wheelRadiusCharacterization(drive));
-    // autoChooser.addOption(
-    //     "Drive Simple FF Characterization", DriveCommands.feedforwardCharacterization(drive));
-    // autoChooser.addOption(
-    //     "Drive SysId (Quasistatic Forward)",
-    //     drive.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
-    // autoChooser.addOption(
-    //     "Drive SysId (Quasistatic Reverse)",
-    //     drive.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
-    // autoChooser.addOption(
-    //     "Drive SysId (Dynamic Forward)", drive.sysIdDynamic(SysIdRoutine.Direction.kForward));
-    // autoChooser.addOption(
-    //     "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
 
     // Configure the button bindings
     configureButtonBindings();
@@ -107,39 +77,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    // Default command, normal field-relative drive
-    // drive.setDefaultCommand(
-    //     DriveCommands.joystickDrive(
-    //         drive,
-    //         () -> -controller.getLeftY(),
-    //         () -> -controller.getLeftX(),
-    //         () -> -controller.getRightX()));
-
-    // Lock to 0° when A button is held
-    // controller
-    //     .a()
-    //     .whileTrue(
-    //         DriveCommands.joystickDriveAtAngle(
-    //             drive,
-    //             () -> -controller.getLeftY(),
-    //             () -> -controller.getLeftX(),
-    //             () -> Rotation2d.kZero));
-
-    // // Switch to X pattern when X button is pressed
-    // controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
-
-    // Reset gyro to 0° when B button is pressed
-    //     controller
-    //         .b()
-    //         .onTrue(
-    //             Commands.runOnce(
-    //                     () ->
-    //                         drive.setPose(
-    //                             new Pose2d(drive.getPose().getTranslation(), Rotation2d.kZero)),
-    //                     drive)
-    //                 .ignoringDisable(true));
-  }
-
+    
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
