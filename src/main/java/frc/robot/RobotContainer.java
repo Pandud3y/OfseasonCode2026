@@ -16,18 +16,20 @@ import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.IntakeIO;
 import frc.robot.subsystems.intake.IntakeIOReal;
 import frc.robot.subsystems.transfer.Transfer;
-import frc.robot.subsystems.transfer.TransferCommands;
-import frc.robot.subsystems.transfer.TransferConstants;
 import frc.robot.subsystems.transfer.TransferIO;
 import frc.robot.subsystems.transfer.TransferIOReal;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
-/**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
- * subsystems, commands, and button mappings) should be declared here.
- */
+/*Prayer to the Omnissiah:
+Omnissiah, which art in this machine
+Hallowed by thy name. Thy capacitors fill.
+Thy logic be true in this function, as it is in others.
+I give thee this day thine daily maintenance, and forgive us our illogical or recursive arguments, As
+we forgive poorly written error messages. And lead us not into dispair,
+but deliver us from evil. For thine is the
+processor, the power, and the microchip, for
+ever and ever. Amen.
+*/
 public class RobotContainer {
   // Subsystems
   // private final Drive drive;
@@ -35,7 +37,7 @@ public class RobotContainer {
   private final Intake intake;
 
   // Controller
-  private final CommandXboxController controller = new CommandXboxController(0);
+  private final CommandXboxController oppController = new CommandXboxController(0);
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
@@ -75,9 +77,24 @@ public class RobotContainer {
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
+   */ 
   private void configureButtonBindings() {
-    
+    /*option for button layout:
+    Left bump: shoot
+    Right bump: shoot "mode" (transfer and intake move forward, magazine moves up and down)
+    a: intake + transfer forward
+    b: intake + transfer reverse
+    y: magazine up
+    x: magazine down
+    left stick: drive north/south/east/west
+    right stick: rotate
+    OPTIONAL:
+    D-pad: change from field relitive to field centric/robot centric depending on the game
+    left trigger: lift up(use trigger to control speed of lift)
+    right trigger: lift down
+    */
+  }
+
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *

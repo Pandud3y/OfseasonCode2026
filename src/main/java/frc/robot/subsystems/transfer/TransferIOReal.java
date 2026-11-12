@@ -35,14 +35,4 @@ public class TransferIOReal implements TransferIO {
     inputs.preShootVelocityRPM = preShootEncoder.getVelocity();
     inputs.transferVelocityRPM = transferEncoder.getVelocity();
   }
-
-  @Override
-  public void setTransferVoltage(double volts) {
-    transferMotor.setVoltage(volts);
-  }
-
-  @Override
-  public void setPreShootVoltage(double volts) {
-    preShootMotor.setVoltage(volts);
-  }
 }
