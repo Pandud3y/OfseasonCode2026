@@ -11,12 +11,16 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.util.Units;
 
 public class ShooterIOReal implements ShooterIO {
   private final SparkMax shooterMotor = new SparkMax(SHOOTER_MOTOR_ID, MotorType.kBrushless);
   private final RelativeEncoder shooterEncoder = shooterMotor.getEncoder();
+
   private final PIDController pid = new PIDController(SHOOTER_KP, SHOOTER_KI, SHOOTER_KD);
+  private final SimpleMotorFeedforward ff =
+      new SimpleMotorFeedforward(SHOOTER_KS, SHOOTER_KV, SHOOTER_KA);
 
   private boolean closedLoop = false;
   private double setpointRadPerSec = 0.0;
@@ -35,9 +39,12 @@ public class ShooterIOReal implements ShooterIO {
             / SHOOTER_GEAR_RATIO;
 
     if (closedLoop) {
-      double volts =
-          SHOOTER_KV * setpointRadPerSec + pid.calculate(velocityRadPerSec, setpointRadPerSec);
-      shooterMotor.setVoltage(MathUtil.clamp(volts, -12.0, 12.0));
+      shooterMotor.setVoltage(
+          MathUtil.clamp(
+              ff.calculate(SHOOTER_VELOCITY, SHOOTER_ACCELERATION)
+                  + pid.calculate(velocityRadPerSec, setpointRadPerSec),
+              -12.0,
+              12.0));
     }
 
     inputs.shooterVelocityRadPerSec = velocityRadPerSec;
