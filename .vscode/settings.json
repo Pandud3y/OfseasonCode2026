@@ -69,5 +69,6 @@
   },
   "[java]": {
     "editor.defaultFormatter": "richardwillis.vscode-spotless-gradle"
-  }
+  },
+  "java.import.gradle.java.home": "C:\\Users\\Public\\wpilib\\2026\\jdk"
 }
