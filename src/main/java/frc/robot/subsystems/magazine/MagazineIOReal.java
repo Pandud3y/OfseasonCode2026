@@ -21,4 +21,12 @@ public class MagazineIOReal implements MagazineIO {
     inputs.isDown = downLimitSwitch.get();
     inputs.magazineRPM = magazineMotor.get();
   }
+
+  @Override
+  public void setMagazineVoltage(double volts) {
+    magazineMotor.setVoltage(volts);
+  }
+
+  @Override
+
 }

@@ -29,7 +29,7 @@ I give thee this day thine daily maintenance, and forgive us our illogical or re
 we forgive poorly written error messages. And lead us not into dispair,
 but deliver us from evil. For thine is the
 processor, the power, and the microchip, for
-ever and ever. Amen.
+ever and ever. r'Amen.
 */
 
 /**
