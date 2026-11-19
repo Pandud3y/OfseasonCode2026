@@ -1,7 +1,7 @@
 // package frc.robot.subsystems.magazine;
 
 // import edu.wpi.first.math.system.plant.DCMotor;
-    
+
 // public class MagazineIOSim implements MagazineIO {
 //     private final DCMotor magazineMotorSim;
 
@@ -27,6 +27,5 @@
 //     public void setMagazineVoltage(double voltage) {
 //         // Simulate setting magazine voltage here
 //     }
-    
-// }
 
+// }
