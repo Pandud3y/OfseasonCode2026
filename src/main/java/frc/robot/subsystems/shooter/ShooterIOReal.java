@@ -7,7 +7,9 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 
 public class ShooterIOReal implements ShooterIO {
   private final SparkMax shooterMotor =
@@ -16,6 +18,9 @@ public class ShooterIOReal implements ShooterIO {
   private final PIDController pid =
       new PIDController(
           ShooterConstants.SHOOTER_KP, ShooterConstants.SHOOTER_KI, ShooterConstants.SHOOTER_KD);
+  private final SimpleMotorFeedforward ff =
+      new SimpleMotorFeedforward(
+          ShooterConstants.SHOOTER_KS, ShooterConstants.SHOOTER_KV, ShooterConstants.SHOOTER_KA);
 
   // true = we are trying to hold a speed, false = we are just giving it volts
   private boolean usingPID = false;
@@ -40,8 +45,8 @@ public class ShooterIOReal implements ShooterIO {
     position = position / ShooterConstants.SHOOTER_GEAR_RATIO;
 
     if (usingPID) {
-      double volts = ShooterConstants.SHOOTER_KV * targetSpeed + pid.calculate(speed, targetSpeed);
-      shooterMotor.setVoltage(volts);
+      double volts = ff.calculate(targetSpeed) + pid.calculate(speed, targetSpeed);
+      shooterMotor.setVoltage(MathUtil.clamp(volts, -12.0, 12.0));
     }
 
     inputs.shooterVelocityRadPerSec = speed;

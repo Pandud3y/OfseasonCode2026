@@ -12,4 +12,9 @@ public class ShooterConstants {
   public static final double SHOOTER_KD = 0.0;
   // feedforward: volts per rad/s
   public static final double SHOOTER_KV = 0.02;
+  public static final double SHOOTER_KS = 0.0;
+  public static final double SHOOTER_KA = 0.0;
+
+  public static final double SHOOTER_VELOCITY = 0.0; // rad/s
+  public static final double SHOOTER_ACCELERATION = 0.0; // rad/s^2
 }
