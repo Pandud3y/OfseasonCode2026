@@ -11,7 +11,7 @@ public class IntakeIOReal implements IntakeIO {
     this.intakeMotor = intakeMotor;
     this.intakeMotorConfiguration = new TalonFXConfiguration();
   }
-
+    
   @Override
   public void updateInputs(IntakeIOInputs inputs) {
     inputs.intakeConnected = intakeMotor.isConnected();

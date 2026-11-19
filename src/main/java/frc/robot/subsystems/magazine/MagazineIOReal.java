@@ -28,5 +28,19 @@ public class MagazineIOReal implements MagazineIO {
   }
 
   @Override
+  public boolean getUpLimitSwitch() {
+    return upLimitSwitch.get();
+  }
 
+  @Override
+  public boolean getDownLimitSwitch() {
+    return downLimitSwitch.get();
+  }
+
+  @Override
+  public void stop() {
+    setMagazineVoltage(0.0);
+  }
+
+  
 }
