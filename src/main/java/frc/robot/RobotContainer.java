@@ -20,7 +20,6 @@ import frc.robot.subsystems.transfer.TransferIO;
 import frc.robot.subsystems.transfer.TransferIOReal;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
-
 /*Prayer to the Omnissiah:
 Omnissiah, which art in this machine
 Hallowed by thy name. Thy capacitors fill.

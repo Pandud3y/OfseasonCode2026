@@ -41,6 +41,4 @@ public class MagazineIOReal implements MagazineIO {
   public void stop() {
     setMagazineVoltage(0.0);
   }
-
-  
 }
