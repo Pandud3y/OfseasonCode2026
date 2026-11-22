@@ -9,8 +9,8 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 public class TransferIOReal implements TransferIO {
-  private final SparkMax transferMotor = new SparkMax(0, MotorType.kBrushless); // find actuall ID
-  private final SparkMax preShootMotor = new SparkMax(0, MotorType.kBrushless); // find actuall ID
+  private final SparkMax transferMotor = new SparkMax(19, MotorType.kBrushless); // find actuall ID
+  private final SparkMax preShootMotor = new SparkMax(21, MotorType.kBrushless); // find actuall ID
 
   private final RelativeEncoder transferEncoder = transferMotor.getEncoder();
   private final RelativeEncoder preShootEncoder = preShootMotor.getEncoder();
