@@ -7,8 +7,8 @@ public class IntakeIOReal implements IntakeIO {
   private final TalonFX intakeMotor;
   private final TalonFXConfiguration intakeMotorConfiguration;
 
-  public IntakeIOReal(TalonFX intakeMotor) {
-    this.intakeMotor = intakeMotor;
+  public IntakeIOReal() {
+    intakeMotor = new TalonFX(17);
     this.intakeMotorConfiguration = new TalonFXConfiguration();
   }
 

@@ -13,6 +13,9 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.IntakeIO;
 import frc.robot.subsystems.intake.IntakeIOReal;
+import frc.robot.subsystems.magazine.Magazine;
+import frc.robot.subsystems.magazine.MagazineIO;
+import frc.robot.subsystems.magazine.MagazineIOReal;
 import frc.robot.subsystems.transfer.Transfer;
 import frc.robot.subsystems.transfer.TransferIO;
 import frc.robot.subsystems.transfer.TransferIOReal;
@@ -39,6 +42,7 @@ public class RobotContainer {
   // private final Drive drive;
   private final Transfer transfer;
   private final Intake intake;
+  private final Magazine magazine;
 
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
@@ -51,7 +55,8 @@ public class RobotContainer {
     switch (Constants.currentMode) {
       case REAL:
         transfer = new Transfer(new TransferIOReal());
-        intake = new Intake(new IntakeIOReal(null));
+        intake = new Intake(new IntakeIOReal());
+        magazine = new Magazine(new MagazineIOReal());
 
         break;
 
@@ -60,11 +65,13 @@ public class RobotContainer {
         but this needs to be changed to proper sim code when it does work*/
         transfer = new Transfer(new TransferIO() {});
         intake = new Intake(new IntakeIO() {});
+        magazine = new Magazine(new MagazineIO() {});
         break;
 
       default:
         transfer = new Transfer(new TransferIO() {});
         intake = new Intake(new IntakeIO() {});
+        magazine = new Magazine(new MagazineIO() {});
 
         break;
     }
@@ -83,20 +90,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    /*option for button layout:
-    Left bump: shoot
-    Right bump: shoot "mode" (transfer and intake move forward, magazine moves up and down)
-    a: intake + transfer forward
-    b: intake + transfer reverse
-    y: magazine up
-    x: magazine down
-    left stick: drive north/south/east/west
-    right stick: rotate
-    OPTIONAL:
-    D-pad: change from field relitive to field centric/robot centric depending on the game
-    left trigger: lift up(use trigger to control speed of lift)
-    right trigger: lift down
-    */
+    // put button bindings here
   }
 
   /**
